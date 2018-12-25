@@ -11,21 +11,11 @@ public  class BING : MonoBehaviour,IPiece {
 
     public bool Move(Point point)
     {
-
+        piecePos.x = point.pointpos.x;
+        piecePos.z = point.pointpos.z;
+        
         return true;
     }
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetPoisition(int x, int z)
     {
         piecePos = new PiecePos(x, z);

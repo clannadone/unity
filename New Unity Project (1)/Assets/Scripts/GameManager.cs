@@ -9,25 +9,21 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-    public LayerMask pointMask ;
+    public LayerMask pointMask;
     public LayerMask RedpieceMask = 1 << 10;
     public LayerMask BlackpieceMask = 1 << 10;
 
     public int selectedID;
     public bool beRedTurn = true;
 
-    public GameObject Path;
-
-    public GameObject fab_selected;
-    public GameObject Selected;
-
     public GameObject chessboard;
 
     public Point[,] points;
     public int width = 9;
     public int length = 10;
+    public Point _Selected;
 
-    public int[,] test;
+    PieceManager pieceManager;
 
     //public string dataPath = null;
     /// <summary>
@@ -58,6 +54,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        pieceManager = GetComponent<PieceManager>();
         points = new Point[width, length];
         Point[] temp = chessboard.transform.GetComponentsInChildren<Point>();
         int index = 0;
@@ -65,18 +62,15 @@ public class GameManager : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                if (x == 1)
-                {
-                   
-                }
                 points[x, z] = temp[index];
                 temp[index].pointpos = new PointPos(x, z);
                 index++;
-                
+
             }
         }
-
     }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -97,12 +91,68 @@ public class GameManager : MonoBehaviour
             //若点击的位置在棋盘内
             if (Physics.Raycast(ray, out hit, pointMask))
             {
-                Debug.Log(hit.transform.gameObject.name);
+                //Debug.Log(hit.transform.gameObject.name);
                 Point temp = hit.transform.gameObject.GetComponent<Point>();
-                Debug.Log("x:"+temp.pointpos.x + "z:"+temp.pointpos.z);
-                
+                //temp = _Selected;
+               // Debug.Log("x:" + _Selected.pointpos.x + "y:" + _Selected.pointpos.z);
+                // Debug.Log("x:"+temp.pointpos.x + "z:"+temp.pointpos.z);
+                Click(temp);
+                //Debug.Log(temp.transform.name);
+                //Debug.Log("方块：x:" + temp.pointpos.x +"y:"+temp.pointpos.z );
+                //Debug.Log("棋子坐标x:" + temp.piece.GetPoisition().x + "y:" + temp.piece.GetPoisition().z);
             }
         }
+    }
+    public void Click(Point point)
+    {
+        if (point.piece != null)
+        {
+            TrySelectPiece(point);
+        }
+        else 
+        {
+            TryMovePiece(point);
+        }
+
+    }
+    public void TrySelectPiece(Point point)
+    {
+        if (point.piece == null) return;
+
+        //if (!Selceted(point)) return;          
+        _Selected = point;
+        
+    }
+    public void TryMovePiece(Point point)
+    {
+        point = _Selected;
+
+        //if (/*Selceted(point) && */point.piece != null)
+        //{
+        //    TrySelectPiece(point);
+        //    return;
+        //}
+        Debug.Log("1");
+        MovePiece(point);
+
+    }
+    void MovePiece(Point point)
+    {
+        Debug.Log("2");
+        point.piece.Move(point);    
+    }
+    //判断是否符合走棋规则
+    //bool CanMove(Point point, PiecePos pos)
+    //{
+
+    //}
+    bool IsRed()
+    {
+        return pieceManager.red;
+    }
+    bool Selceted(bool red)
+    {
+        return beRedTurn = red/*pieceManager.Init(true)*/;
     }
 
     #region 弃用
@@ -111,19 +161,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void JudgeVictory()
     {
-       // if (PieceManager.p[4].dead == true)
-       // {
-            //获胜
-            //  WinPlane.SetActive(true);
-            // PlayMusic_Win();
+        // if (PieceManager.p[4].dead == true)
+        // {
+        //获胜
+        //  WinPlane.SetActive(true);
+        // PlayMusic_Win();
         //}
 
         //if (PieceManager.p[20].dead == true)
-       // {
-            //失败
-            //LosePlane.SetActive(true);
-            //PlayMusic_Lose();
-       // }
+        // {
+        //失败
+        //LosePlane.SetActive(true);
+        //PlayMusic_Lose();
+        // }
     }
 
 
@@ -163,30 +213,30 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void MoveError(int moveId, Vector3 position)
     {
-      
+
     }
 
-   //Vector3 Center(Point point)
-   // {
-   //     float x = 0;
-   //     float y = 0;
-   //     float z = 0;
-   //     x = point.pointpos.x;
-   //     z = point.pointpos.z;
-   //     y = 0.5f;
-   //     return new Vector3(x, y, z);
-    
-   // }
- 
+    //Vector3 Center(Point point)
+    // {
+    //     float x = 0;
+    //     float y = 0;
+    //     float z = 0;
+    //     x = point.pointpos.x;
+    //     z = point.pointpos.z;
+    //     y = 0.5f;
+    //     return new Vector3(x, y, z);
 
-   //尝试选择棋子
-   void TryChoosePiece(Point point)
+    // }
+
+
+    //尝试选择棋子
+    void TryChoosePiece(Point point)
     {
         //if (point.piece)
         //{
         //    return;
         //}
-     //   if(!IsRed)
+        //   if(!IsRed)
     }
 
 
@@ -196,7 +246,7 @@ public class GameManager : MonoBehaviour
 
     void TryMovePiece()
     {
-    //  if()
+        //  if()
     }
 
     /// <summary>
@@ -344,7 +394,7 @@ public class GameManager : MonoBehaviour
     {
         if (id == -1) return;
 
-       // PieceManager.p[id].dead = true;
+        // PieceManager.p[id].dead = true;
         GameObject Piece = GameObject.Find(id.ToString());
         Piece.SetActive(false);
     }
@@ -358,7 +408,7 @@ public class GameManager : MonoBehaviour
         if (id == -1) return;
 
         //因GameObject.Find();函数不能找到active==false的物体，故先找到其父物体，再找到其子物体才可以找到active==false的物体
-      //  PieceManager.p[id].dead = false;
+        //  PieceManager.p[id].dead = false;
         GameObject Background = GameObject.Find("Background");
         GameObject Piece = Background.transform.Find(id.ToString()).gameObject;
         Piece.SetActive(true);

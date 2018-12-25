@@ -45,6 +45,8 @@ public class PieceManager : MonoBehaviour
 
     public PointPos pointPos;
     public PieceType pieceType;
+
+    public bool red;
     Dictionary<Vector2, PieceType> RedPiece = new Dictionary<Vector2, PieceType>
     {
         {new Vector2(0,3),PieceType.BING },
@@ -111,6 +113,7 @@ public class PieceManager : MonoBehaviour
             GameObject obj = Instantiate(GetPrefebs(red, item.Value), tep.transform.position, Quaternion.identity,PieceParent);
             tep.piece = obj.GetComponent<IPiece>();
             tep.piece.SetPoisition((int)item.Key.x, (int)item.Key.y);
+          //  Debug.Log("x" + (int)item.Key.x + "y" + (int)item.Key.y);
         }
     }
     public GameObject GetPrefebs(bool red, PieceType type)

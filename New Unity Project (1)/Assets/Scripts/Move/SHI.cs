@@ -13,18 +13,6 @@ public class SHI : MonoBehaviour,IPiece{
     {
         return true;
     }
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetPoisition(int x, int z)
     {
         piecePos = new PiecePos(x, z);
