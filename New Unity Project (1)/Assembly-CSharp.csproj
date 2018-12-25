@@ -70,6 +70,13 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IPiece.cs" />
+    <Compile Include="Assets\Scripts\Move\BING.cs" />
+    <Compile Include="Assets\Scripts\Move\JIANG.cs" />
+    <Compile Include="Assets\Scripts\Move\JU.cs" />
+    <Compile Include="Assets\Scripts\Move\MA.cs" />
+    <Compile Include="Assets\Scripts\Move\PAO.cs" />
+    <Compile Include="Assets\Scripts\Move\SHI.cs" />
+    <Compile Include="Assets\Scripts\Move\XIANG.cs" />
     <Compile Include="Assets\Scripts\PieceManager.cs" />
     <Compile Include="Assets\Scripts\Point.cs" />
     <Compile Include="Assets\Scripts\RuleManager.cs" />

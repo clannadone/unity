@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class IPiece : MonoBehaviour
+public interface IPiece 
 {
-    public PieceType pieceType;
-    public virtual void Move() { }
-    public virtual void CheckLevel() { }
-
+    bool Move(Point point);
+    bool CheckLevel(Point point);
+    void SetPoisition(int x, int z);
+    PiecePos GetPoisition();
 }
+

@@ -12,12 +12,10 @@ public class PointPos
 {
     public int x, z;
  
- 
     public PointPos(int x, int z)
     {
         this.x = x;
-        this.z = z;
-     
+        this.z = z;  
     }
 }
 public class Point : MonoBehaviour

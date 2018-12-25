@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour
 
     public int[,] test;
 
-
-
     //public string dataPath = null;
     /// <summary>
     /// 保存每一步走棋
@@ -57,24 +55,27 @@ public class GameManager : MonoBehaviour
     }
     public List<step> steps = new List<step>();
 
-    void Awake()
-    {
 
-    }
-    void Start()
+    void Awake()
     {
         points = new Point[width, length];
         Point[] temp = chessboard.transform.GetComponentsInChildren<Point>();
         int index = 0;
-        for (int x = 0; x < width; x++)
+        for (int z = 0; z < length; z++)
         {
-            for (int z = 0; z < length; z++)
+            for (int x = 0; x < width; x++)
             {
+                if (x == 1)
+                {
+                   
+                }
                 points[x, z] = temp[index];
                 temp[index].pointpos = new PointPos(x, z);
                 index++;
+                
             }
         }
+
     }
     // Update is called once per frame
     void Update()
@@ -104,25 +105,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    #region 弃用
     /// <summary>
     /// 判断胜负
     /// </summary>
     void JudgeVictory()
     {
-        if (PieceManager.p[4].dead == true)
-        {
+       // if (PieceManager.p[4].dead == true)
+       // {
             //获胜
             //  WinPlane.SetActive(true);
             // PlayMusic_Win();
-        }
+        //}
 
-        if (PieceManager.p[20].dead == true)
-        {
+        //if (PieceManager.p[20].dead == true)
+       // {
             //失败
             //LosePlane.SetActive(true);
             //PlayMusic_Lose();
-        }
+       // }
     }
 
 
@@ -134,32 +135,27 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
-    // 当鼠标选择棋子时，改变棋子的Sprite
+    ///// <summary>
+    ///// 设置上一步棋子走过的路径，即将上一步行动的棋子的位置留下标识，并标识该棋子
+    ///// </summary>
+    //void ShowPath(Vector3 oldPosition, Vector3 newPosition)
+    //{
+    //    Selected.transform.position = newPosition;
+    //    Selected.SetActive(true);
 
-   
-
-
-    /// <summary>
-    /// 设置上一步棋子走过的路径，即将上一步行动的棋子的位置留下标识，并标识该棋子
-    /// </summary>
-    void ShowPath(Vector3 oldPosition, Vector3 newPosition)
-    {
-        Selected.transform.position = newPosition;
-        Selected.SetActive(true);
-
-        Path.transform.position = oldPosition;
-        Path.SetActive(true);
-    }
+    //    Path.transform.position = oldPosition;
+    //    Path.SetActive(true);
+    //}
 
 
     /// <summary>
     /// 隐藏路径
     /// </summary>
-    void HidePath()
-    {
-        Selected.SetActive(false);
-        Path.SetActive(false);
-    }
+    //void HidePath()
+    //{
+    //    Selected.SetActive(false);
+    //    Path.SetActive(false);
+    //}
 
 
     /// <summary>
@@ -167,97 +163,30 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void MoveError(int moveId, Vector3 position)
     {
-        GameObject Piece = GameObject.Find(moveId.ToString());
-        Vector3 oldPosition = new Vector3(PieceManager.p[moveId].x, 0, PieceManager.p[moveId].z);
-        Vector3[] paths = new Vector3[3];
-        paths[0] = oldPosition;
-        paths[1] = position;
-        paths[2] = oldPosition;
-        Piece.transform.DOPath(paths, 0.8f);
+      
     }
 
-   Vector3 Center(Point point)
+   //Vector3 Center(Point point)
+   // {
+   //     float x = 0;
+   //     float y = 0;
+   //     float z = 0;
+   //     x = point.pointpos.x;
+   //     z = point.pointpos.z;
+   //     y = 0.5f;
+   //     return new Vector3(x, y, z);
+    
+   // }
+ 
+
+   //尝试选择棋子
+   void TryChoosePiece(Point point)
     {
-        float x = 0;
-        float y = 0;
-        float z = 0;
-        x = point.pointpos.x;
-        z = point.pointpos.z;
-        y = 0.5f;
-        return new Vector3(x, y, z);
-        ////x,y,z为要返回的三维坐标
-        ////将象棋分为9列（i）和10行（j）
-        ////计算距离鼠标所指坐标点的最近的行列的序号（tpmi、tmpj）
-        ////通过行列的序号算出位于该行该列的中心点的坐标位置并返回
-
-        //float x = 0;
-        //float y = 0;
-        //float z = 0;
-        //int i, tmpi = 1, j, tmpj = 1;
-        //float min = 5f;
-
-        //for (i = 0; i < 9; ++i)
+        //if (point.piece)
         //{
-        //    if (Math.Abs(point.x - ToolManager.colToX(i)) < min)
-        //    {
-        //        // Debug.Log(point.x);
-        //        min = Math.Abs(point.x - ToolManager.colToX(i));
-        //        tmpi = i;
-        //    }
+        //    return;
         //}
-        //x = ToolManager.colToX(tmpi);
-
-        //// Debug.Log("列:"+ tmpi);
-        //min = 5f;
-        //for (j = 0; j < 10; ++j)
-        //{
-        //    if (Math.Abs(point.z - ToolManager.rowToZ(j)) < min)
-        //    {
-        //        // Debug.Log(point.z);
-        //        min = Math.Abs(point.z - ToolManager.rowToZ(j));
-        //        tmpj = j;
-        //    }
-        //}
-        //z = ToolManager.rowToZ(tmpj);
-        ////Debug.Log("行:"+ tmpj);
-        //return new Vector3(x, y, z);
-    }
-
-    // 获取点击的中心位置,若该位置上有棋子，则获取该棋子ID，否则id为-1
-
-    void Click(Point point)
-    {
-        float x = Center(point).x;
-        float z = Center(point).z;
-        int id = ToolManager.GetPieceId(x, z);
-        Debug.Log(id);
-        Click(id, x, z);
-    }
-    // 若当前没有选中棋子，则尝试选中点击的棋子；若当前已有选中的棋子，则尝试移动棋子
-
-    void Click(int id, float x, float z)
-    {
-        if (selectedID == -1)
-        {
-            TrySelectPiece(id);
-        }
-        else
-        {
-            TryMovePiece(id, x, z);
-        }
-    }
-
-    // 尝试选择棋子；若id=-1或者不是处于移动回合的棋子，则返回；否则，将该棋子设为选中的棋子，并更新图片
-
-    void TrySelectPiece(int id)
-    {
-        if (id == -1) return;
-
-        if (!CanSelect(id)) return;
-
-        selectedID = id;
-
-        // ChangeSpriteToSelect(id);
+     //   if(!IsRed)
     }
 
 
@@ -265,26 +194,9 @@ public class GameManager : MonoBehaviour
     // 若要移动的目标位置有棋子（kiillId）且和当前选中的棋子同色，则换选择
     // 若可以移动，则移动；若不能移动，则播放移动错误的提示动画
 
-    void TryMovePiece(int killId, float x, float z)
+    void TryMovePiece()
     {
-        if (killId != -1 && SameColor(killId, selectedID))
-        {
-            // ChangeSpriteToNormal(selectedID);
-            TrySelectPiece(killId);
-            return;
-        }
-
-        bool ret = CanMove(selectedID, killId, new Vector3(x, 0, z));
-
-        if (ret)
-        {
-            MovePiece(selectedID, killId, new Vector3(x, 0, z));
-            selectedID = -1;
-        }
-        else
-        {
-            MoveError(selectedID, new Vector3(x, 0, z));
-        }
+    //  if()
     }
 
     /// <summary>
@@ -297,43 +209,29 @@ public class GameManager : MonoBehaviour
         // 2.将移动棋子的路径显示出来
         // 3.将棋子移动到目标位置
         // 4.播放音效
-        // 5.改变精灵的渲染图片
         // 6.判断是否符合胜利或者失败的条件
 
-        SaveStep(moveId, killId, position.x, position.z);
-
-        KillPiece(killId);
-
-        ShowPath(new Vector3(PieceManager.p[moveId].x, PieceManager.p[moveId].z, 0), position);
-
-        MovePiece(moveId, position);
-
-        // PlayMusic_Move();
-
-        //ChangeSpriteToNormal(moveId);
-
-        JudgeVictory();
     }
 
 
     // 将移动的棋子ID、吃掉的棋子ID以及棋子从A点的坐标移动到B点的坐标都记录下来
 
-    void SaveStep(int moveId, int killId, float bx, float bz)
-    {
-        step tmpStep = new step();
+    //void SaveStep(int moveId, int killId, float bx, float bz)
+    //{
+    //    step tmpStep = new step();
 
-        float ax = PieceManager.p[moveId].x;
-        float az = PieceManager.p[moveId].z;
+    //  //  float ax = PieceManager.p[moveId].x;
+    //   // float az = PieceManager.p[moveId].z;
 
-        tmpStep.moveId = moveId;
-        tmpStep.killId = killId;
-        tmpStep.xFrom = ax;
-        tmpStep.zFrom = az;
-        tmpStep.xTo = bx;
-        tmpStep.zTo = bz;
+    //    tmpStep.moveId = moveId;
+    //    tmpStep.killId = killId;
+    //    tmpStep.xFrom = ax;
+    //    tmpStep.zFrom = az;
+    //    tmpStep.xTo = bx;
+    //    tmpStep.zTo = bz;
 
-        steps.Add(tmpStep);
-    }
+    //    steps.Add(tmpStep);
+    //}
 
     /// <summary>
     /// 通过记录的步骤结构体来返回上一步
@@ -375,33 +273,33 @@ public class GameManager : MonoBehaviour
     /// <param name="p1"></param>
     /// <param name="p2"></param>
     /// <returns></returns>
-    bool CanMove(int moveId, int killId, Vector3 clickPoint)
-    {
-        if (SameColor(moveId, killId)) return false;
+    //bool CanMove(int moveId, int killId, Vector3 clickPoint)
+    //{
+    //    if (SameColor(moveId, killId)) return false;
 
-     //   int col = ToolManager.xToCol(clickPoint.x);
-      //  int row = ToolManager.zToRow(clickPoint.z);
+    // //   int col = ToolManager.xToCol(clickPoint.x);
+    //  //  int row = ToolManager.zToRow(clickPoint.z);
 
-        switch (PieceManager.p[moveId].type)
-        {
-            case PieceType.JIANG:
-                return RuleManager.moveJiang(moveId, row, col, killId);
-            case PieceType.SHI:
-                return RuleManager.moveShi(moveId, row, col, killId);
-            case PieceType.XIANG:
-                return RuleManager.moveXiang(moveId, row, col, killId);
-            case PieceType.JU:
-                return RuleManager.moveJU(moveId, row, col, killId);
-            case PieceType.MA:
-                return RuleManager.moveMa(moveId, row, col, killId);
-            case PieceType.PAO:
-                return RuleManager.movePao(moveId, row, col, killId);
-            case PieceType.BING:
-                return RuleManager.moveBing(moveId, row, col, killId);
-        }
+    //    switch (PieceManager.p[moveId].type)
+    //    {
+    //        case PieceType.JIANG:
+    //            return RuleManager.moveJiang(moveId, row, col, killId);
+    //        case PieceType.SHI:
+    //            return RuleManager.moveShi(moveId, row, col, killId);
+    //        case PieceType.XIANG:
+    //            return RuleManager.moveXiang(moveId, row, col, killId);
+    //        case PieceType.JU:
+    //            return RuleManager.moveJU(moveId, row, col, killId);
+    //        case PieceType.MA:
+    //            return RuleManager.moveMa(moveId, row, col, killId);
+    //        case PieceType.PAO:
+    //            return RuleManager.movePao(moveId, row, col, killId);
+    //        case PieceType.BING:
+    //            return RuleManager.moveBing(moveId, row, col, killId);
+    //    }
 
-        return true;
-    }
+    //    return true;
+    //}
 
     /// <summary>
     /// 判断点击的棋子是否可以被选中，即点击的棋子是否在它可以移动的回合
@@ -410,19 +308,25 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     bool CanSelect(int id)
     {
-        return beRedTurn == PieceManager.p[id].red;
+        //return beRedTurn == PieceManager.p[id].red;
+        return true;
+
     }
 
 
     bool IsRed(int id)
     {
-        return PieceManager.p[id].red;
+        // return PieceManager.p[id].red;        
+        return true;
+
     }
 
     bool IsDead(int id)
     {
         if (id == -1) return true;
-        return PieceManager.p[id].dead;
+        // return PieceManager.p[id].dead;
+        return true;
+
     }
 
     bool SameColor(int id1, int id2)
@@ -440,7 +344,7 @@ public class GameManager : MonoBehaviour
     {
         if (id == -1) return;
 
-        PieceManager.p[id].dead = true;
+       // PieceManager.p[id].dead = true;
         GameObject Piece = GameObject.Find(id.ToString());
         Piece.SetActive(false);
     }
@@ -454,12 +358,11 @@ public class GameManager : MonoBehaviour
         if (id == -1) return;
 
         //因GameObject.Find();函数不能找到active==false的物体，故先找到其父物体，再找到其子物体才可以找到active==false的物体
-        PieceManager.p[id].dead = false;
+      //  PieceManager.p[id].dead = false;
         GameObject Background = GameObject.Find("Background");
         GameObject Piece = Background.transform.Find(id.ToString()).gameObject;
         Piece.SetActive(true);
     }
-
     /// <summary>
     /// 移动棋子到目标位置
     /// </summary>
@@ -469,40 +372,11 @@ public class GameManager : MonoBehaviour
         GameObject Piece = GameObject.Find(moveId.ToString());
         Piece.transform.DOMove(point, 0.5f);
         // Piece.transform.position = Vector3.Lerp(transform.position, point, Time.deltaTime);
-        PieceManager.p[moveId].x = point.x;
-        PieceManager.p[moveId].z = point.z;
+        //PieceManager.p[moveId].x = point.x;
+        //PieceManager.p[moveId].z = point.z;
 
         beRedTurn = !beRedTurn;
     }
-
-    /// <summary>
-    /// 判断点击的位置是否在棋盘内
-    /// </summary>
-    /// <param name="hit"></param>
-    /// <returns></returns>
-    bool InsideJUssbord(RaycastHit hit)
-    {
-        if ((hit.point.x > -24 && hit.point.x < 24) && ((hit.point.z > -23.5 && hit.point.z < 23.5)))
-            return true;
-        else
-            return false;
-    }
-
-
-
+    #endregion
 }
-public class Node
-{
 
-    public int _x;
-    public int _y;
-
-    public Node(int _x, int _y)
-    {
-
-
-
-        this._x = _x;
-        this._y = _y;
-    }
-}

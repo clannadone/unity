@@ -166,3 +166,5 @@ D:\unity project\New Unity Project (1)\obj\Debug\Assembly-CSharp.csproj.CoreComp
 D:\unity project\New Unity Project (1)\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\unity project\New Unity Project (1)\obj\Debug\Assembly-CSharp.dll
 D:\unity project\New Unity Project (1)\obj\Debug\Assembly-CSharp.pdb
+D:\unity project\New Unity Project (1)\Temp\bin\Debug\DOTween.dll
+D:\unity project\New Unity Project (1)\Temp\bin\Debug\DOTween.xml

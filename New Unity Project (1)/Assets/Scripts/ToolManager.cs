@@ -88,7 +88,7 @@ public class ToolManager : MonoBehaviour
 
         for (int i = 0; i < 32; ++i)
         {
-            if (x == PieceManager.p[i].x && z == PieceManager.p[i].z && PieceManager.p[i].dead == false)
+           // if (x == PieceManager.p[i].x && z == PieceManager.p[i].z && PieceManager.p[i].dead == false)
                 return i;
         }
         return -1;
@@ -99,12 +99,12 @@ public class ToolManager : MonoBehaviour
    
     public static int GetPieceId(float x, float z)
     {
-        for (int i = 0; i < 32; ++i)
-        {
-              //  Debug.Log("x"+x+"z:"+ z);
-            if (x == PieceManager.p[i].x && z == PieceManager.p[i].z && PieceManager.p[i].dead == false)
-                return i;
-        }
+        //for (int i = 0; i < 32; ++i)
+        //{
+        //      //  Debug.Log("x"+x+"z:"+ z);
+        //    if (x == PieceManager.p[i].x && z == PieceManager.p[i].z && PieceManager.p[i].dead == false)
+        //        return i;
+        //}
         return -1;
     }
 
@@ -113,14 +113,14 @@ public class ToolManager : MonoBehaviour
    
     public static bool IsBottomSide(int selectedId)
     {
-        if (PieceManager.p[selectedId].initZ < 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        //if (PieceManager.p[selectedId].initZ < 0)
+        //{
+        //    return true;
+        //}
+        //else
+        //{
+           return false;
+        //}
     }
 
    

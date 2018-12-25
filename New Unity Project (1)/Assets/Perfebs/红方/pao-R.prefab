@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33075837921305426}
   - component: {fileID: 23128390454127388}
   - component: {fileID: 65261090182666912}
+  - component: {fileID: 114574808846044676}
   m_Layer: 10
   m_Name: pao-R
   m_TagString: Untagged
@@ -96,3 +97,14 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114574808846044676
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1413373109078440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b22c54e4f56380c4183ae0a95390b1aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

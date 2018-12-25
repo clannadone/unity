@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33308081693639382}
   - component: {fileID: 23811863131418476}
   - component: {fileID: 65118344169529556}
+  - component: {fileID: 114280415688365362}
   m_Layer: 10
   m_Name: jiang-B
   m_TagString: Untagged
@@ -96,3 +97,14 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114280415688365362
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1469401095826498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33da0fcda0571e9489da564c7c95c5a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

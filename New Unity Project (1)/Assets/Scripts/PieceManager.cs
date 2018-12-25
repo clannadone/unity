@@ -11,21 +11,20 @@ public enum PieceType
     PAO,
     BING
 }
-public struct PiecePos
+public class PiecePos
 {
     public float x, z;
-    public PieceType type;
-    public PiecePos(float x, float z, PieceType type)
+
+    public PiecePos(float x, float z)
     {
         this.x = x;
         this.z = z;
-        this.type = type;
     }
 }
 
 public class PieceManager : MonoBehaviour
 {
-
+    public GameManager gamemanager;
     public Transform PieceParent;
     //初始化14种棋子的预制体
     public GameObject ju_black;
@@ -44,68 +43,79 @@ public class PieceManager : MonoBehaviour
     public GameObject pao_red;
     public GameObject bing_red;
 
-
-    public static Piece[] p = new Piece[32];
-    /// <summary>
-    ///
-    /// </summary>
-    public struct Piece
+    public PointPos pointPos;
+    public PieceType pieceType;
+    Dictionary<Vector2, PieceType> RedPiece = new Dictionary<Vector2, PieceType>
     {
-        public int id;
+        {new Vector2(0,3),PieceType.BING },
+        {new Vector2(2,3),PieceType.BING },
+        {new Vector2(4,3),PieceType.BING },
+        {new Vector2(6,3),PieceType.BING },
+        {new Vector2(8,3),PieceType.BING },
 
-        public bool red;
+        {new Vector2(1,2),PieceType.PAO },
+        {new Vector2(7,2),PieceType.PAO },
 
-        public bool dead;
+        {new Vector2(0,0),PieceType.JU },
+        {new Vector2(1,0),PieceType.MA },
+        {new Vector2(2,0),PieceType.XIANG },
+        {new Vector2(3,0),PieceType.SHI },
+        {new Vector2(4,0),PieceType.JIANG },
+        {new Vector2(5,0),PieceType.SHI },
+        {new Vector2(6,0),PieceType.XIANG },
+        {new Vector2(7,0),PieceType.MA },
+        {new Vector2(8,0),PieceType.JU },
 
-        public float x;
-        public float z;
-        public int initZ;
-        public PieceType type;
-        public void init(int id)
-        {
-            this.id = id;
-            red = id < 16;
-            dead = false;
-
-            PiecePos[] pos =
-            {
-            new PiecePos(20f,23f,PieceType.JU),
-            new PiecePos(15f,23f,PieceType.MA),
-            new PiecePos(10f,23f,PieceType.XIANG),
-            new PiecePos(5f,23f,PieceType.SHI),
-            new PiecePos(0f,23f,PieceType.JIANG),
-            new PiecePos(-5.1f,22f,PieceType.SHI),
-            new PiecePos(-10.1f,22f,PieceType.XIANG),
-            new PiecePos(-15.2f,22f,PieceType.MA),
-            new PiecePos(-20.3f,22f,PieceType.JU),
-
-            new PiecePos(15f,12f,PieceType.PAO),
-            new PiecePos(-15f,12f,PieceType.PAO),
-
-            new PiecePos(20f,8f,PieceType.BING),
-            new PiecePos(10f,8f,PieceType.BING),
-            new PiecePos(0f,8f,PieceType.BING),
-            new PiecePos(-10f,8f,PieceType.BING),
-            new PiecePos(-20f,8f,PieceType.BING),
         };
-            if (id < 16)
-            {
-                x = pos[id].x;
-                z = pos[id].z;
-                type = pos[id].type;
-            }
-            else
-            {
-                x = -pos[id - 16].x;
-                z = -pos[id - 16].z;
-                type = pos[id - 16].type;
-            }
+    Dictionary<Vector2, PieceType> BlackPiece = new Dictionary<Vector2, PieceType>
+    {
+        {new Vector2(0,6),PieceType.BING },
+        {new Vector2(2,6),PieceType.BING },
+        {new Vector2(4,6),PieceType.BING },
+        {new Vector2(6,6),PieceType.BING },
+        {new Vector2(8,6),PieceType.BING },
+
+        {new Vector2(1,7),PieceType.PAO },
+        {new Vector2(7,7),PieceType.PAO },
+
+        {new Vector2(0,9),PieceType.JU },
+        {new Vector2(1,9),PieceType.MA },
+        {new Vector2(2,9),PieceType.XIANG },
+        {new Vector2(3,9),PieceType.SHI },
+        {new Vector2(4,9),PieceType.JIANG },
+        {new Vector2(5,9),PieceType.SHI },
+        {new Vector2(6,9),PieceType.XIANG },
+        {new Vector2(7,9),PieceType.MA },
+        {new Vector2(8,9),PieceType.JU },
+
+        };
+    private void Start()
+    {
+        Init(true); Init(false);
+    }
+    public void Init(bool red)
+    {
+        Point[,] points = gamemanager.points;
+        Dictionary<Vector2, PieceType> temp = null;
+        if (red)
+        {
+            temp = RedPiece;
+        }
+        else
+        {
+            temp = BlackPiece;
+        }
+        foreach (var item in temp)
+        {
+            Point tep = points[(int)item.Key.x, (int)item.Key.y];
+            GameObject obj = Instantiate(GetPrefebs(red, item.Value), tep.transform.position, Quaternion.identity,PieceParent);
+            tep.piece = obj.GetComponent<IPiece>();
+            tep.piece.SetPoisition((int)item.Key.x, (int)item.Key.y);
         }
     }
-
-    public GameObject GetPrefebs(int id, PieceType type)
+    public GameObject GetPrefebs(bool red, PieceType type)
     {
-        if (id < 16)
+        if (red)
         {
             switch (type)
             {
@@ -145,28 +155,9 @@ public class PieceManager : MonoBehaviour
                     return bing_black;
             }
         }
-        return bing_black;
+        return null;
     }
 
-    public void PieceInit()
-    {
-        for (int i = 0; i < 32; i++)
-        {
-            p[i].init(i);
-        }
-        for (int i = 0; i < 32; i++)
-        {
-            GameObject fabs = GetPrefebs(i, p[i].type);
 
-            GameObject Piece = Instantiate(fabs, transform.localPosition, Quaternion.identity, PieceParent) as GameObject;
-            Piece.name = i.ToString();
-            Piece.transform.position = new Vector3(p[i].x, 0.25f, p[i].z);
-            Piece.AddComponent<BoxCollider>();
 
-        }
-    }
-    void Awake()
-    {
-        PieceInit();
-    }
 }
