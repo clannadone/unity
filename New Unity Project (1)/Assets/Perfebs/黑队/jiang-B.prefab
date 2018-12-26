@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23811863131418476}
   - component: {fileID: 65118344169529556}
   - component: {fileID: 114280415688365362}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: jiang-B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,3 +108,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33da0fcda0571e9489da564c7c95c5a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  red: 0

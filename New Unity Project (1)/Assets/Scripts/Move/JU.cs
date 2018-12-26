@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class JU : MonoBehaviour,IPiece {
     public PiecePos piecePos;
+    public bool red;
     public bool CheckLevel(Point point)
     {
         throw new System.NotImplementedException();
@@ -21,5 +22,18 @@ public class JU : MonoBehaviour,IPiece {
     public PiecePos GetPoisition()
     {
         return this.piecePos;
+    }
+
+    public void SetTransformPoisition(Vector3 vec)
+    {
+        throw new System.NotImplementedException();
+    }
+    public void SetTurn(bool red)
+    {
+        this.red = red;
+    }
+    public bool GetTurn()
+    {
+        return red;
     }
 }

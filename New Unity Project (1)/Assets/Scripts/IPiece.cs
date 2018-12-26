@@ -8,5 +8,8 @@ public interface IPiece
     bool CheckLevel(Point point);
     void SetPoisition(int x, int z);
     PiecePos GetPoisition();
+    void SetTransformPoisition(Vector3 vec);
+    void SetTurn(bool red);
+    bool GetTurn();
 }
 

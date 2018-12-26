@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23680952156414414}
   - component: {fileID: 65758695589147246}
   - component: {fileID: 114702900305990250}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: ju-B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,3 +108,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81db54b22069974183cdc689d8d24fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  red: 0

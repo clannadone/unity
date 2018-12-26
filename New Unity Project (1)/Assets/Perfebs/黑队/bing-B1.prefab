@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23597470207849192}
   - component: {fileID: 65711894740880642}
   - component: {fileID: 114691650548144114}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: bing-B1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 1382260031046156}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.3, y: 0.25, z: -1.5}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2, y: 4, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -108,3 +108,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f196671e70ebc7d4cbdf9ec6eb6ebb4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  red: 0

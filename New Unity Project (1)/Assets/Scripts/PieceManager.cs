@@ -112,6 +112,7 @@ public class PieceManager : MonoBehaviour
             Point tep = points[(int)item.Key.x, (int)item.Key.y];
             GameObject obj = Instantiate(GetPrefebs(red, item.Value), tep.transform.position, Quaternion.identity,PieceParent);
             tep.piece = obj.GetComponent<IPiece>();
+            tep.piece.SetTurn(red);
             tep.piece.SetPoisition((int)item.Key.x, (int)item.Key.y);
           //  Debug.Log("x" + (int)item.Key.x + "y" + (int)item.Key.y);
         }
