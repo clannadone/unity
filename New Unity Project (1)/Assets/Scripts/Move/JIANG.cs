@@ -5,15 +5,52 @@ using UnityEngine;
 public class JIANG : MonoBehaviour,IPiece {
     public PiecePos piecePos;
     public bool red;
-    public bool CheckLevel(Point point)
+    public PieceType pieceType;
+    GameManager gameManager;
+    void Start()
     {
-        throw new System.NotImplementedException();
+        gameManager = FindObjectOfType<GameManager>();
+    }
+    public bool DuiJiang()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (gameManager.points[piecePos.x, piecePos.z + i].piece.GetPieceType(PieceType.JIANG))
+            {
+                Destroy(gameObject);
+            }
+        }
+        return true;
+    }
+    public bool GetPieceType(PieceType pieceType)
+    {
+        return pieceType == PieceType.JIANG;
+    }
+    public void Hide(Point point)
+    {
+        gameObject.SetActive(false);
     }
 
     public bool Move(Point point)
     {
-        
-        return true;
+        if (red)
+        {
+            if (point.pointpos.z <= 2 && point.pointpos.x >= 3 && point.pointpos.x <= 5&&!DuiJiang())
+            {
+                if(Mathf.Abs(point.pointpos.z-piecePos.z) !=1|| Mathf.Abs(point.pointpos.x-piecePos.x) != 1)
+                return true;
+            }
+            return false;
+        }
+        else
+        {
+            if (point.pointpos.z >=7 && point.pointpos.x >= 3 && point.pointpos.x <= 5 && !DuiJiang())
+            {
+                if (Mathf.Abs(point.pointpos.z - piecePos.z) != 1 || Mathf.Abs(point.pointpos.x - piecePos.x) != 1)
+                    return true;
+            }
+            return false;
+        }      
     }
 
     public void SetPoisition(int x, int z)
@@ -28,7 +65,7 @@ public class JIANG : MonoBehaviour,IPiece {
 
     public void SetTransformPoisition(Vector3 vec)
     {
-        throw new System.NotImplementedException();
+        transform.position = vec;
     }
 
     public void SetTurn(bool red)

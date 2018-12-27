@@ -109,3 +109,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   red: 0
+  width: 9
+  length: 10

@@ -5,14 +5,41 @@ using UnityEngine;
 public class XIANG : MonoBehaviour,IPiece  {
     public PiecePos piecePos;
     public bool red;
-    public bool CheckLevel(Point point)
+    public PieceType PieceType;
+    public bool GetPieceType(PieceType pieceType)
     {
-        throw new System.NotImplementedException();
+        return pieceType == PieceType.XIANG;
+    }
+    public bool CheckPath(Point point)
+    {
+        return false;
+    }
+    public void Hide(Point point)
+    {
+        gameObject.SetActive(false);
     }
 
     public bool Move(Point point)
     {
-        return true;
+        if (point.piece != null && point.piece.GetTurn() == red) return false;
+        if (red)
+        {
+            if (point.pointpos.z <= 4)
+            {
+                if (Mathf.Abs(point.pointpos.x - piecePos.x) == 2 && Mathf.Abs(point.pointpos.z - piecePos.z) == 2)
+                    return true;
+            }
+            return false;
+        }
+        else
+        {
+            if (point.pointpos.z >= 5)
+            {
+                if (Mathf.Abs(point.pointpos.x - piecePos.x) == 2 && Mathf.Abs(point.pointpos.z - piecePos.z) == 2)
+                    return true;
+            }
+            return false;
+        }
     }
     public void SetPoisition(int x, int z)
     {
@@ -26,7 +53,7 @@ public class XIANG : MonoBehaviour,IPiece  {
 
     public void SetTransformPoisition(Vector3 vec)
     {
-        throw new System.NotImplementedException();
+        transform.position = vec;
     }
     public void SetTurn(bool red)
     {

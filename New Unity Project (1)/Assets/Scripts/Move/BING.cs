@@ -5,12 +5,20 @@ using UnityEngine;
 public  class BING : MonoBehaviour,IPiece {
     public PiecePos piecePos;
     public bool red;
-    public bool CheckLevel(Point point)
+    public PieceType PieceType;
+    public bool GetPieceType(PieceType pieceType)
     {
-        throw new System.NotImplementedException();
+        return pieceType == PieceType.BING;
+    }
+    public void  Hide(Point point)
+    {
+
+        gameObject.SetActive(false);
+
     }
     public bool Move(Point point)
     {
+        if (point.piece != null && point.piece.GetTurn() == red) return false;
         if (red)
         {
             if (point.pointpos.z <= 5)
@@ -23,10 +31,10 @@ public  class BING : MonoBehaviour,IPiece {
             }
             else
             {
-                if (point.pointpos.z - piecePos.z != 1 || Mathf.Abs(point.pointpos.x - piecePos.x) != 1)
+                if (point.pointpos.z - piecePos.z != 1 && Mathf.Abs(point.pointpos.x - piecePos.x) != 1)
                 {
                     return false;
-                }
+                }             
                 return true;
             }
         }
@@ -35,7 +43,7 @@ public  class BING : MonoBehaviour,IPiece {
             if (point.pointpos.z >= 4)
             {
 
-                if (point.pointpos.z - piecePos.z != 1)
+                if (piecePos.z- point.pointpos.z  != 1)
                 {
                     return false;
                 }
@@ -43,7 +51,7 @@ public  class BING : MonoBehaviour,IPiece {
             }
             else
             {
-                if (point.pointpos.z - piecePos.z != 1 || Mathf.Abs(point.pointpos.x - piecePos.x) != 1)
+                if ( piecePos.z-point.pointpos.z != 1 && Mathf.Abs(point.pointpos.x - piecePos.x) != 1)
                 {
                     return false;
                 }

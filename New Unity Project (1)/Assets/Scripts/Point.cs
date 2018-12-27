@@ -20,6 +20,7 @@ public class PointPos
 }
 public class Point : MonoBehaviour
 {
+   
     public IPiece piece=null;
     public Material MoveColor;
     public Material IdeaColor;

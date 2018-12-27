@@ -5,9 +5,85 @@ using UnityEngine;
 public class PAO : MonoBehaviour,IPiece {
     public PiecePos piecePos;
     public bool red;
-    public bool CheckLevel(Point point)
+    GameManager gameManager;
+    public PieceType PieceType;
+    public int index=0;
+    public bool GetPieceType(PieceType pieceType)
     {
-        throw new System.NotImplementedException();
+        return pieceType == PieceType.PAO;
+    }
+    void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
+    public bool CheckPath(Point point)
+    {
+
+        if (point.pointpos.x == piecePos.x)
+        {
+            int temp = point.pointpos.z - piecePos.z;
+            if (temp < 0)
+            {
+                for (int i = 1; i < piecePos.z - point.pointpos.z; i++)
+                {
+                    if (gameManager.points[point.pointpos.x, piecePos.z - i].piece != null)
+                    {
+                        Debug.Log("前方有棋子挡住了");
+                        index++;
+                        return false;
+                    }
+                }
+            }
+            else if (temp > 0)
+            {
+                for (int i = 1; i < point.pointpos.z; i++)
+                {
+                    if (gameManager.points[piecePos.x, piecePos.z + i].piece != null)
+                    {
+                        index++;
+                        Debug.Log("前方有棋子挡住了");
+                        return false;
+                    }
+                }
+            }
+        }
+        else if (point.pointpos.z == piecePos.z)
+        {
+            int temp = point.pointpos.x - piecePos.x;
+            if (temp < 0)
+            {
+                for (int i = 1; i < piecePos.x - point.pointpos.x; i++)
+                {
+                    if (gameManager.points[piecePos.x - i, piecePos.z].piece != null)
+                    {
+                        index++;
+                        Debug.Log("左方有棋子挡住了");
+                        return false;
+                    }
+                }
+            }
+            else if (temp > 0)
+            {
+                for (int i = 1; i < point.pointpos.x; i++)
+                {
+                    if (gameManager.points[piecePos.x + i, point.pointpos.z].piece != null)
+                    {
+                        index++;
+                        Debug.Log("右方有棋子挡住了");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    public void Hide(Point point)
+    {
+        if (index == 1)
+        {
+            gameObject.SetActive(false);
+        }
+       
     }
 
     public bool Move(Point point)
@@ -26,7 +102,7 @@ public class PAO : MonoBehaviour,IPiece {
 
     public void SetTransformPoisition(Vector3 vec)
     {
-        throw new System.NotImplementedException();
+        transform.position = vec;
     }
     public void SetTurn(bool red)
     {

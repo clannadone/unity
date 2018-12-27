@@ -11,11 +11,12 @@ public enum PieceType
     PAO,
     BING
 }
+[System.Serializable]
 public class PiecePos
 {
-    public float x, z;
+    public int x, z;
 
-    public PiecePos(float x, float z)
+    public PiecePos(int x, int z)
     {
         this.x = x;
         this.z = z;
