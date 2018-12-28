@@ -23,13 +23,17 @@ public class GameManager : MonoBehaviour
     public Point[,] points;
     public int width = 9;
     public int length = 10;
+
     Point _SelectedPoint;
     IPiece _SelectedPiece;
     IPiece _TargetPiece;
+
     private State state;
 
     private bool redTurn = true;
+
     PieceManager pieceManager;
+    public HUD hud;
 
     void Awake()
     {
@@ -41,17 +45,14 @@ public class GameManager : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-
                 points[x, z] = temp[index];
                 temp[index].pointpos = new PointPos(x, z);
                 index++;
-
             }
         }
         redTurn = true;
         state = State.Select;
     }
-
    // Update is called once per frame
     void Update()
     {
@@ -108,15 +109,12 @@ public class GameManager : MonoBehaviour
                             redTurn = !redTurn;
                             state = State.Select;
                         }
-                        else if (!TryMovePiece())
+                        else
                         {
+                            hud.ShowMessage("有棋子挡住了");
                             _SelectedPiece = null;
                             _SelectedPoint = null;
                             state = State.Select;
-                        }
-                        else
-                        {
-                            _SelectedPoint = null;
                         }
                     }
                 }
@@ -138,21 +136,17 @@ public class GameManager : MonoBehaviour
                             redTurn = !redTurn;
                             state = State.Select;
                         }
-                        else if (!TryMovePiece())
+                        else
                         {
+                            hud.ShowMessage("有棋子挡住了");
                             _SelectedPiece = null;
                             _SelectedPoint = null;
                             state = State.Select;
-                        }
-                        else
-                        {
-                            _SelectedPoint = null;
                         }
                     }
                 }
                 break;
         }
-
     }
     public GameObject Click(LayerMask mask)
     {
@@ -162,7 +156,7 @@ public class GameManager : MonoBehaviour
         //若点击的位置在棋盘内
         if (Physics.Raycast(ray, out hit, 100, mask.value))
         {
-          //  Debug.Log((int)mask);
+       //  Debug.Log((int)mask);
           //  Debug.Log(hit.transform.gameObject.name);
             return hit.transform.gameObject;
         }
@@ -170,9 +164,10 @@ public class GameManager : MonoBehaviour
     }
     public bool TryMovePiece()
     {
-
         if (_SelectedPiece.Move(_SelectedPoint))
         {
+            PiecePos temp = _SelectedPiece.GetPoisition();
+            points[temp.x, temp.z].piece = null;
             if (_SelectedPoint.piece != null)
             {
                 _SelectedPoint.piece.Hide(_SelectedPoint);
@@ -181,12 +176,10 @@ public class GameManager : MonoBehaviour
             _SelectedPiece.SetPoisition(_SelectedPoint.pointpos.x, _SelectedPoint.pointpos.z);
             _SelectedPiece.SetTransformPoisition(_SelectedPoint.transform.position);
             _SelectedPoint.piece = _SelectedPiece;
+    
             return true;
         }
         return false;
-
-    }
-
-   
+    }   
 }
 

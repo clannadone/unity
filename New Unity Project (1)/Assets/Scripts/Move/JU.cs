@@ -35,7 +35,7 @@ public class JU : MonoBehaviour, IPiece
             }
             else if (temp > 0)
             {
-                for (int i = 1; i < point.pointpos.z; i++)
+                for (int i = 1; i < point.pointpos.z-piecePos.z; i++)
                 {
                     if (gameManager.points[piecePos.x, piecePos.z + i].piece != null)
                     {
@@ -61,9 +61,10 @@ public class JU : MonoBehaviour, IPiece
             }
             else if (temp > 0)
             {
-                for (int i = 1; i < point.pointpos.x ; i++)
+                Debug.Log("piecePos.x"+piecePos.x);
+                for (int i = 1; i < point.pointpos.x-piecePos.x ; i++)
                 {
-                    if (gameManager.points[piecePos.x + i, point.pointpos.z].piece != null)
+                    if (gameManager.points[piecePos.x+i, piecePos.z].piece != null)
                     {
                         Debug.Log("右方有棋子挡住了");
                         return false;

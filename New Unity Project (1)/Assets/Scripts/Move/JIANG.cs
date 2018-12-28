@@ -6,6 +6,7 @@ public class JIANG : MonoBehaviour,IPiece {
     public PiecePos piecePos;
     public bool red;
     public PieceType pieceType;
+    public int index;
     GameManager gameManager;
     void Start()
     {
