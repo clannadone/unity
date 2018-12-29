@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class HUD : MonoBehaviour {
     public Text ErrorText;
+    public UnityEvent Event;
     // Use this for initialization
     void Start () {
 		

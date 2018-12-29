@@ -23,13 +23,19 @@ public class PAO : MonoBehaviour, IPiece
             int temp = point.pointpos.z - piecePos.z;
             if (temp < 0)
             {
+
                 for (int i = 1; i < piecePos.z - point.pointpos.z; i++)
                 {
-                    //1*如果移动路线中间偶遇障碍物 记住第一个障碍物的坐标 
+                    //1*如果移动路线中间有障碍物 记住第一个障碍物的坐标 
                     //2*第一个障碍物的坐标计算和目标的距离 并判断中间有没有第二个障碍物
                     if (gameManager.points[point.pointpos.x, piecePos.z - i].piece != null)
                     {
-                        for (int j = point.pointpos.z+i ; j < piecePos.z-i; j++)
+                        if (gameManager.points[point.pointpos.x, point.pointpos.z].piece == null)
+                        {
+                            Debug.Log("前方有棋子挡住了");
+                            return false;
+                        }
+                        for (int j = point.pointpos.z + i; j < piecePos.z - i; j++)
                         {
                             if (gameManager.points[point.pointpos.x, piecePos.z - i - j].piece != null)
                             {
@@ -46,6 +52,11 @@ public class PAO : MonoBehaviour, IPiece
                 {
                     if (gameManager.points[piecePos.x, piecePos.z + i].piece != null)
                     {
+                        if (gameManager.points[point.pointpos.x, point.pointpos.z].piece == null)
+                        {
+                            Debug.Log("前方有棋子挡住了");
+                            return false;
+                        }
                         for (int j = piecePos.z + i; j < (point.pointpos.z) - (piecePos.z + i); j++)
                         {
                             if (gameManager.points[piecePos.x, piecePos.z + i + j].piece != null)
@@ -65,10 +76,13 @@ public class PAO : MonoBehaviour, IPiece
             {
                 for (int i = 1; i < piecePos.x - point.pointpos.x; i++)
                 {
-                    Debug.Log("1");
                     if (gameManager.points[piecePos.x - i, piecePos.z].piece != null)
                     {
-                        Debug.Log("2");
+                        if (gameManager.points[point.pointpos.x, point.pointpos.z].piece == null)
+                        {
+                            Debug.Log("前方有棋子挡住了");
+                            return false;
+                        }
                         for (int j = point.pointpos.x + i; j < piecePos.x - i; j++)
                         {
                             if (gameManager.points[piecePos.x - i - j, piecePos.z].piece != null)
@@ -86,7 +100,12 @@ public class PAO : MonoBehaviour, IPiece
                 {
                     if (gameManager.points[piecePos.x + i, piecePos.z].piece != null)
                     {
-                        for (int j = piecePos.x + i; j < (point.pointpos.x) - (piecePos.x+i); j++)
+                        if (gameManager.points[point.pointpos.x, point.pointpos.z].piece == null)
+                        {
+                            Debug.Log("前方有棋子挡住了");
+                            return false;
+                        }
+                        for (int j = piecePos.x + i; j < (point.pointpos.x) - (piecePos.x + i); j++)
                         {
                             if (gameManager.points[piecePos.x + i + j, piecePos.z].piece != null)
                             {

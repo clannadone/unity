@@ -6,19 +6,50 @@ public class XIANG : MonoBehaviour,IPiece  {
     public PiecePos piecePos;
     public bool red;
     public PieceType PieceType;
+    GameManager gameManager;
+    void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
     public bool GetPieceType(PieceType pieceType)
     {
         return pieceType == PieceType.XIANG;
-    }
-    public bool CheckPath(Point point)
-    {
-        return false;
     }
     public void Hide(Point point)
     {
         gameObject.SetActive(false);
     }
-
+    public bool CheckPath(Point point)
+    {
+        int temp = point.pointpos.z - piecePos.z;
+        if (temp > 0)
+        {
+            if (gameManager.points[piecePos.x + 1, piecePos.z + 1].piece != null)
+            {
+                Debug.Log("塞象眼了");
+                return false;
+            }
+            else if (gameManager.points[piecePos.x - 1, piecePos.z + 1].piece != null)
+            {
+                Debug.Log("塞象眼了");
+                return false;
+            }
+        }
+        else if (temp < 0)
+        {
+            if (gameManager.points[piecePos.x - 1, piecePos.z - 1].piece != null)
+            {
+                Debug.Log("塞象眼了");
+                return false;
+            }
+            else if (gameManager.points[piecePos.x + 1, piecePos.z + 1].piece != null)
+            {
+                Debug.Log("塞象眼了");
+                return false;
+            }
+        }
+        return true;
+    }
     public bool Move(Point point)
     {
         if (point.piece != null && point.piece.GetTurn() == red) return false;
@@ -26,7 +57,7 @@ public class XIANG : MonoBehaviour,IPiece  {
         {
             if (point.pointpos.z <= 4)
             {
-                if (Mathf.Abs(point.pointpos.x - piecePos.x) == 2 && Mathf.Abs(point.pointpos.z - piecePos.z) == 2)
+                if (Mathf.Abs(point.pointpos.x - piecePos.x) == 2 && Mathf.Abs(point.pointpos.z - piecePos.z) == 2&&CheckPath(point))
                     return true;
             }
             return false;
@@ -35,7 +66,7 @@ public class XIANG : MonoBehaviour,IPiece  {
         {
             if (point.pointpos.z >= 5)
             {
-                if (Mathf.Abs(point.pointpos.x - piecePos.x) == 2 && Mathf.Abs(point.pointpos.z - piecePos.z) == 2)
+                if (Mathf.Abs(point.pointpos.x - piecePos.x) == 2 && Mathf.Abs(point.pointpos.z - piecePos.z) == 2 && CheckPath(point))
                     return true;
             }
             return false;
