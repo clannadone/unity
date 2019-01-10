@@ -5,27 +5,21 @@ using UnityEngine;
 public class JIANG : MonoBehaviour,IPiece {
     public PiecePos piecePos;
     public bool red;
-    public PieceType pieceType;
+   
     public int index;
     GameManager gameManager;
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
     }
-    public bool DuiJiang()
+    public string PieceToString()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            if (gameManager.points[piecePos.x, piecePos.z + i].piece.GetPieceType(PieceType.JIANG))
-            {
-                Destroy(gameObject);
-            }
-        }
-        return true;
+        return "将";
     }
-    public bool GetPieceType(PieceType pieceType)
+   
+    public PieceType GetPieceType()
     {
-        return pieceType == PieceType.JIANG;
+        return PieceType.JIANG;
     }
     public void Hide(Point point)
     {

@@ -11,6 +11,7 @@ public interface IPiece
     void SetTransformPoisition(Vector3 vec);
     void SetTurn(bool red);
     bool GetTurn();
-    bool GetPieceType(PieceType pieceType);
+    PieceType GetPieceType();
+    string PieceToString();
 }
 

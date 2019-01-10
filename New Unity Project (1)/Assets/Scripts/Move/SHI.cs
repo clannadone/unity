@@ -6,10 +6,13 @@ public class SHI : MonoBehaviour, IPiece
 {
     public PiecePos piecePos;
     public bool red;
-    public PieceType PieceType;
-    public bool GetPieceType(PieceType pieceType)
+    public PieceType GetPieceType()
     {
-        return pieceType == PieceType.SHI;
+        return PieceType.SHI;
+    }
+    public string PieceToString()
+    {
+        return "士";
     }
     public void Hide(Point point)
     {

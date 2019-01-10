@@ -7,116 +7,182 @@ public class PAO : MonoBehaviour, IPiece
     public PiecePos piecePos;
     public bool red;
     GameManager gameManager;
-    public PieceType PieceType;
-    public bool GetPieceType(PieceType pieceType)
+    public string PieceToString()
     {
-        return pieceType == PieceType.PAO;
+        return "炮";
+    }
+    public PieceType GetPieceType()
+    {
+        return PieceType.PAO;
     }
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
     }
-    public bool CheckPath(Point point)
+    public bool CheckPath(Point point, bool inside_x = true)
     {
-        if (point.pointpos.x == piecePos.x)
+        if (point.piece == null)
         {
-            int temp = point.pointpos.z - piecePos.z;
-            if (temp < 0)
+            if (inside_x)
             {
+                int temp = point.pointpos.z - piecePos.z;
+                if (temp < 0)
+                {
+                    for (int i = 1; i < piecePos.z - point.pointpos.z; i++)
+                    {
+                        if (gameManager.points[point.pointpos.x, piecePos.z - i].piece != null)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else if (temp > 0)
+                {
+                    for (int i = 1; i < point.pointpos.z - piecePos.z; i++)
+                    {
+                        if (gameManager.points[piecePos.x, piecePos.z + i].piece != null)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            else if (!inside_x)
+            {
+                int temp = point.pointpos.x - piecePos.x;
+                if (temp < 0)
+                {
+                    for (int i = 1; i < piecePos.x - point.pointpos.x; i++)
+                    {
+                        if (gameManager.points[piecePos.x-i, piecePos.z].piece != null)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else if (temp > 0)
+                {
+                    for (int i = 1; i < point.pointpos.x - piecePos.x; i++)
+                    {
+                        if (gameManager.points[piecePos.x+i, piecePos.z].piece != null)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
 
-                for (int i = 1; i < piecePos.z - point.pointpos.z; i++)
-                {
-                    //1*如果移动路线中间有障碍物 记住第一个障碍物的坐标 
-                    //2*第一个障碍物的坐标计算和目标的距离 并判断中间有没有第二个障碍物
-                    if (gameManager.points[point.pointpos.x, piecePos.z - i].piece != null)
-                    {
-                        if (gameManager.points[point.pointpos.x, point.pointpos.z].piece == null)
-                        {
-                            Debug.Log("前方有棋子挡住了");
-                            return false;
-                        }
-                        for (int j = point.pointpos.z + i; j < piecePos.z - i; j++)
-                        {
-                            if (gameManager.points[point.pointpos.x, piecePos.z - i - j].piece != null)
-                            {
-                                Debug.Log("前方有棋子挡住了");
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-            else if (temp > 0)
-            {
-                for (int i = 1; i < point.pointpos.z - piecePos.z; i++)
-                {
-                    if (gameManager.points[piecePos.x, piecePos.z + i].piece != null)
-                    {
-                        if (gameManager.points[point.pointpos.x, point.pointpos.z].piece == null)
-                        {
-                            Debug.Log("前方有棋子挡住了");
-                            return false;
-                        }
-                        for (int j = piecePos.z + i; j < (point.pointpos.z) - (piecePos.z + i); j++)
-                        {
-                            if (gameManager.points[piecePos.x, piecePos.z + i + j].piece != null)
-                            {
-                                Debug.Log("前方有棋子挡住了");
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
         }
-        else if (point.pointpos.z == piecePos.z)
+        else
         {
-            int temp = point.pointpos.x - piecePos.x;
-            if (temp < 0)
+            if (inside_x)
             {
-                for (int i = 1; i < piecePos.x - point.pointpos.x; i++)
+                int temp = point.pointpos.z - piecePos.z;
+                Point tep = null;
+                if (temp < 0)
                 {
-                    if (gameManager.points[piecePos.x - i, piecePos.z].piece != null)
+                    for (int i = 1; i < piecePos.z - point.pointpos.z; i++)
                     {
-                        if (gameManager.points[point.pointpos.x, point.pointpos.z].piece == null)
+                        if (gameManager.points[point.pointpos.x, piecePos.z - i].piece != null)
                         {
-                            Debug.Log("前方有棋子挡住了");
-                            return false;
-                        }
-                        for (int j = point.pointpos.x + i; j < piecePos.x - i; j++)
-                        {
-                            if (gameManager.points[piecePos.x - i - j, piecePos.z].piece != null)
-                            {
-                                Debug.Log("左方有棋子挡住了");
-                                return false;
-                            }
+                            tep = gameManager.points[point.pointpos.x, piecePos.z - i];
+                            break;
                         }
                     }
                 }
-            }
-            else if (temp > 0)
-            {
-                for (int i = 1; i < point.pointpos.x - piecePos.x; i++)
+                else if (temp > 0)
                 {
-                    if (gameManager.points[piecePos.x + i, piecePos.z].piece != null)
+                    for (int i = 1; i < point.pointpos.z - piecePos.z; i++)
                     {
-                        if (gameManager.points[point.pointpos.x, point.pointpos.z].piece == null)
+                        if (gameManager.points[piecePos.x, piecePos.z + i].piece != null)
                         {
-                            Debug.Log("前方有棋子挡住了");
-                            return false;
-                        }
-                        for (int j = piecePos.x + i; j < (point.pointpos.x) - (piecePos.x + i); j++)
-                        {
-                            if (gameManager.points[piecePos.x + i + j, piecePos.z].piece != null)
-                            {
-                                Debug.Log("右方有棋子挡住了");
-                                return false;
-                            }
+                            tep = gameManager.points[piecePos.x, piecePos.z + i];
+                            break;
                         }
                     }
+                }
+                if (tep == null) return false;
+                int temp2 = point.pointpos.z - tep.pointpos.z;
+                if (temp2 < 0)
+                {
+                    for (int i = 1; i < tep.pointpos.z - point.pointpos.z; i++)
+                    {
+                        if (gameManager.points[point.pointpos.x, tep.pointpos.z - i].piece != null)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else if (temp2 > 0)
+                {
+                    for (int i = 1; i < point.pointpos.z - tep.pointpos.z; i++)
+                    {
+                        if (gameManager.points[point.pointpos.x, tep.pointpos.z + i].piece != null)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            else if (!inside_x)
+            {
+                int temp = point.pointpos.x - piecePos.x;
+                Point tep = null;
+                if (temp < 0)
+                {
+                    for (int i = 1; i < piecePos.x - point.pointpos.x; i++)
+                    {
+                        if (gameManager.points[piecePos.x - i, piecePos.z].piece != null)
+                        {
+                            tep = gameManager.points[piecePos.x - i, piecePos.z];
+                            break;
+                        }
+                    }
+                }
+                else if (temp > 0)
+                {
+                    for (int i = 1; i < point.pointpos.x - piecePos.x; i++)
+                    {
+                        if (gameManager.points[piecePos.x + i, piecePos.z].piece != null)
+                        {
+                            tep = gameManager.points[piecePos.x + i, piecePos.z];
+                            break;
+                        }
+                    }
+                }
+                if (tep == null) return false;
+                int temp2 = point.pointpos.x - tep.pointpos.x;
+                if (temp2 < 0)
+                {
+                    for (int i = 1; i < tep.pointpos.x - point.pointpos.x; i++)
+                    {
+                        if (gameManager.points[tep.pointpos.x - i, tep.pointpos.z].piece != null)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else if (temp2 > 0)
+                {
+                    for (int i = 1; i < point.pointpos.x - tep.pointpos.x; i++)
+                    {
+                        if (gameManager.points[tep.pointpos.x + i, tep.pointpos.z].piece != null)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
                 }
             }
         }
+
         return true;
     }
     public void Hide(Point point)
@@ -133,7 +199,7 @@ public class PAO : MonoBehaviour, IPiece
             {
                 return true;
             }
-            else if (Mathf.Abs(point.pointpos.x - piecePos.x) > 0 && Mathf.Abs(point.pointpos.z - piecePos.z) == 0 && CheckPath(point))
+            else if (Mathf.Abs(point.pointpos.x - piecePos.x) > 0 && Mathf.Abs(point.pointpos.z - piecePos.z) == 0 && CheckPath(point, false))
             {
                 return true;
             }
@@ -146,7 +212,7 @@ public class PAO : MonoBehaviour, IPiece
             {
                 return true;
             }
-            else if (Mathf.Abs(point.pointpos.x - piecePos.x) > 0 && Mathf.Abs(point.pointpos.z - piecePos.z) == 0 && CheckPath(point))
+            else if (Mathf.Abs(point.pointpos.x - piecePos.x) > 0 && Mathf.Abs(point.pointpos.z - piecePos.z) == 0 && CheckPath(point, false))
             {
                 return true;
             }

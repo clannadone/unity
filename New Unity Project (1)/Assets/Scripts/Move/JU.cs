@@ -7,10 +7,14 @@ public class JU : MonoBehaviour, IPiece
     GameManager gameManager;
     public PiecePos piecePos;
     public bool red;
-    public PieceType PieceType;
-    public bool GetPieceType(PieceType pieceType)
+
+    public PieceType GetPieceType()
     {
-        return pieceType == PieceType.JU;
+        return PieceType.JU;
+    }
+    public string PieceToString()
+    {
+        return "车";
     }
     void Start()
     {

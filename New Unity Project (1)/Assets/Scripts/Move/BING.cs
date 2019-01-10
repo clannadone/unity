@@ -5,10 +5,13 @@ using UnityEngine;
 public  class BING : MonoBehaviour,IPiece {
     public PiecePos piecePos;
     public bool red;
-    public PieceType PieceType;
-    public bool GetPieceType(PieceType pieceType)
+    public PieceType GetPieceType()
     {
-        return pieceType == PieceType.BING;
+        return PieceType.BING;
+    }
+    public string PieceToString()
+    {
+        return "兵";
     }
     public void  Hide(Point point)
     {
@@ -21,7 +24,7 @@ public  class BING : MonoBehaviour,IPiece {
         if (point.piece != null && point.piece.GetTurn() == red) return false;
         if (red)
         {
-            if (point.pointpos.z <= 5)
+            if (point.pointpos.z <= 4.5f)
             {
                 if (point.pointpos.z - piecePos.z != 1)
                 {
@@ -40,7 +43,7 @@ public  class BING : MonoBehaviour,IPiece {
         }
         else
         {
-            if (point.pointpos.z >= 4)
+            if (point.pointpos.z >= 4.5f)
             {
 
                 if (piecePos.z- point.pointpos.z  != 1)

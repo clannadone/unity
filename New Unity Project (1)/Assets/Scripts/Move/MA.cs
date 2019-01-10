@@ -7,12 +7,14 @@ public class MA : MonoBehaviour, IPiece
     public PiecePos piecePos;
     public bool red;
     GameManager gameManager;
-    public PieceType PieceType;
-    public bool GetPieceType(PieceType pieceType)
+    public PieceType GetPieceType()
     {
-        return pieceType == PieceType.MA;
+        return PieceType.MA;
     }
-
+    public string PieceToString()
+    {
+        return "马";
+    }
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();

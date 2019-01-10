@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum PieceType
 {
+    BING,
     JIANG,
     SHI,
     XIANG,
     MA,
-    JU,
     PAO,
-    BING
+    JU,
 }
 [System.Serializable]
 public class PiecePos
@@ -46,7 +46,7 @@ public class PieceManager : MonoBehaviour
 
     public PointPos pointPos;
     public PieceType pieceType;
-
+    public List<IPiece> jiang;
     public bool red;
     Dictionary<Vector2, PieceType> RedPiece = new Dictionary<Vector2, PieceType>
     {
@@ -115,6 +115,10 @@ public class PieceManager : MonoBehaviour
             tep.piece = obj.GetComponent<IPiece>();
             tep.piece.SetTurn(red);
             tep.piece.SetPoisition((int)item.Key.x, (int)item.Key.y);
+            if (tep.piece.GetPieceType() == PieceType.JIANG)
+            {
+                jiang.Add(tep.piece);
+            }
           //  Debug.Log("x" + (int)item.Key.x + "y" + (int)item.Key.y);
         }
     }

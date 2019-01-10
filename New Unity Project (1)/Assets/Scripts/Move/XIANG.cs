@@ -5,15 +5,18 @@ using UnityEngine;
 public class XIANG : MonoBehaviour,IPiece  {
     public PiecePos piecePos;
     public bool red;
-    public PieceType PieceType;
     GameManager gameManager;
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
     }
-    public bool GetPieceType(PieceType pieceType)
+    public string PieceToString()
     {
-        return pieceType == PieceType.XIANG;
+        return "相";
+    }
+    public PieceType GetPieceType()
+    {
+        return PieceType.XIANG;
     }
     public void Hide(Point point)
     {
@@ -42,7 +45,7 @@ public class XIANG : MonoBehaviour,IPiece  {
                 Debug.Log("塞象眼了");
                 return false;
             }
-            else if (gameManager.points[piecePos.x + 1, piecePos.z + 1].piece != null)
+            else if (gameManager.points[piecePos.x + 1, piecePos.z - 1].piece != null)
             {
                 Debug.Log("塞象眼了");
                 return false;
