@@ -30,8 +30,10 @@ public class GameManager : MonoBehaviour
     public int width = 9;
     public int length = 10;
 
-    Point _SelectedPoint;
-    IPiece _SelectedPiece;
+    public  Point _SelectedPoint;
+   public  IPiece _SelectedPiece;
+
+
     IPiece _TargetPiece;
 
     IPiece redJinag;
@@ -64,17 +66,17 @@ public class GameManager : MonoBehaviour
 
         List<IPiece> tep = pieceManager.jiang;
 
-        for (int i = 0; i < 1; i++)
-        {
-            if (tep[i].GetTurn())
-            {
-                redJinag = tep[i];
-            }
-            else
-            {
-                blackJiang = tep[i];
-            }
-        }
+        //for (int i = 0; i < 1; i++)
+        //{
+        //    if (tep[i].GetTurn())
+        //    {
+        //        redJinag = tep[i];
+        //    }
+        //    else
+        //    {
+        //        blackJiang = tep[i];
+        //    }
+        //}
         redTurn = true;
         state = State.Select;
     }
@@ -244,6 +246,7 @@ public class GameManager : MonoBehaviour
     {
         int _x;
         int _z;
+        int index;
         if (red)
         {
              _x = redJinag.GetPoisition().x;
@@ -263,33 +266,56 @@ public class GameManager : MonoBehaviour
             {
                 temp.Add(points[_x + i, _z].piece);
             }
+            //炮检测
+            else if(points[_x + i, _z].piece != null)
+            {
+                for (int j = _x+i; j < 8-(_x+i); j++)
+                {
+                    if(points[_x + i+j, _z].piece != null && points[_x + i+j, _z].piece.GetTurn() != red)
+                    {
+                        temp.Add(points[_x + i+j, _z].piece);
+                    }
+                }
+            }
         }
         //左
         for (int i = 0; i < _x; i++)
         {
             //车检测
-            if (points[_x - i, _z].piece.GetPieceType() == PieceType.JU && !points[_x - i, _z].piece.GetTurn())
+            if (points[_x - i, _z].piece!= null && points[_x - i, _z].piece.GetTurn() != red)
             {
-                return true;
+                temp.Add(points[_x - i, _z].piece);
             }
         }
         //上
         for (int i = 0; i < 9 - _z; i++)
         {
             //车检测
-            if (points[_x, _z+i].piece.GetPieceType() == PieceType.JU && !points[_x , _z+i].piece.GetTurn())
+            if (points[_x, _z+i].piece != null && points[_x , _z+i].piece.GetTurn() != red)
             {
-                return true;
+                temp.Add(points[_x , _z+i].piece);
             }
         }
         for (int i = 0; i < _z; i++)
         {
             //车检测
-            if (points[_x , _z-i].piece.GetPieceType() == PieceType.JU && !points[_x, _z - i].piece.GetTurn())
+            if (points[_x , _z-i].piece != null && points[_x , _z-i].piece.GetTurn() != red)
             {
-                return true;
+                temp.Add(points[_x, _z - i].piece);
             }
         }
+        //马检测
+        if (points[_x+1,_z+2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x+2,_z+1].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x+1,_z-2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x+1,_z-1].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x-1,_z+2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x-1,_z+1].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x-1,_z-2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x-1,_z-2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+
+        
+
         foreach (var item in temp)
         {
             if(item.Move(points[_x, _z]))

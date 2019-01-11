@@ -7,6 +7,7 @@ public class PAO : MonoBehaviour, IPiece
     public PiecePos piecePos;
     public bool red;
     GameManager gameManager;
+    Vector3 _vec;
     public string PieceToString()
     {
         return "炮";
@@ -17,6 +18,7 @@ public class PAO : MonoBehaviour, IPiece
     }
     void Start()
     {
+        _vec = transform.position;
         gameManager = FindObjectOfType<GameManager>();
     }
     public bool CheckPath(Point point, bool inside_x = true)
@@ -229,10 +231,16 @@ public class PAO : MonoBehaviour, IPiece
     {
         return this.piecePos;
     }
-
+    private void Update()
+    {
+        if (Vector3.Distance(transform.position,_vec ) >0.01f)
+        {
+            transform.position = Vector3.Lerp(transform.position, _vec, 2f * Time.deltaTime);
+        }
+    }
     public void SetTransformPoisition(Vector3 vec)
     {
-        transform.position = vec;
+        _vec = vec;
     }
     public void SetTurn(bool red)
     {

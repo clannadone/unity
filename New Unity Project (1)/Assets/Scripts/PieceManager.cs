@@ -115,10 +115,10 @@ public class PieceManager : MonoBehaviour
             tep.piece = obj.GetComponent<IPiece>();
             tep.piece.SetTurn(red);
             tep.piece.SetPoisition((int)item.Key.x, (int)item.Key.y);
-            if (tep.piece.GetPieceType() == PieceType.JIANG)
-            {
-                jiang.Add(tep.piece);
-            }
+            //if (tep.piece.GetPieceType() == PieceType.JIANG)
+            //{
+            //    jiang.Add(tep.piece);
+            //}
           //  Debug.Log("x" + (int)item.Key.x + "y" + (int)item.Key.y);
         }
     }

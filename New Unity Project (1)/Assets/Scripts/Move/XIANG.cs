@@ -5,9 +5,11 @@ using UnityEngine;
 public class XIANG : MonoBehaviour,IPiece  {
     public PiecePos piecePos;
     public bool red;
+    Vector3 _vec;
     GameManager gameManager;
     void Start()
     {
+        _vec = transform.position;
         gameManager = FindObjectOfType<GameManager>();
     }
     public string PieceToString()
@@ -85,9 +87,16 @@ public class XIANG : MonoBehaviour,IPiece  {
         return this.piecePos;
     }
 
+    private void Update()
+    {
+        if (Vector3.Distance(transform.position, _vec) > 0.01f)
+        {
+            transform.position = Vector3.Lerp(transform.position, _vec, 2f * Time.deltaTime);
+        }
+    }
     public void SetTransformPoisition(Vector3 vec)
     {
-        transform.position = vec;
+        _vec = vec;
     }
     public void SetTurn(bool red)
     {

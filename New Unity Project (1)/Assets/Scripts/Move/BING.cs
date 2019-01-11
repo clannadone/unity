@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public  class BING : MonoBehaviour,IPiece {
+public class BING : MonoBehaviour, IPiece
+{
     public PiecePos piecePos;
     public bool red;
+    Vector3 _vec;
+    GameManager gameManager;
+    void Start()
+    {
+        _vec = transform.position;
+    }
     public PieceType GetPieceType()
     {
         return PieceType.BING;
@@ -13,11 +20,9 @@ public  class BING : MonoBehaviour,IPiece {
     {
         return "兵";
     }
-    public void  Hide(Point point)
+    public void Hide(Point point)
     {
-
         gameObject.SetActive(false);
-
     }
     public bool Move(Point point)
     {
@@ -37,7 +42,7 @@ public  class BING : MonoBehaviour,IPiece {
                 if (point.pointpos.z - piecePos.z != 1 && Mathf.Abs(point.pointpos.x - piecePos.x) != 1)
                 {
                     return false;
-                }             
+                }
                 return true;
             }
         }
@@ -46,7 +51,7 @@ public  class BING : MonoBehaviour,IPiece {
             if (point.pointpos.z >= 4.5f)
             {
 
-                if (piecePos.z- point.pointpos.z  != 1)
+                if (piecePos.z - point.pointpos.z != 1)
                 {
                     return false;
                 }
@@ -54,14 +59,14 @@ public  class BING : MonoBehaviour,IPiece {
             }
             else
             {
-                if ( piecePos.z-point.pointpos.z != 1 && Mathf.Abs(point.pointpos.x - piecePos.x) != 1)
+                if (piecePos.z - point.pointpos.z != 1 && Mathf.Abs(point.pointpos.x - piecePos.x) != 1)
                 {
                     return false;
                 }
                 return true;
             }
         }
-       
+
 
     }
     public void SetPoisition(int x, int z)
@@ -73,11 +78,18 @@ public  class BING : MonoBehaviour,IPiece {
     {
         return piecePos;
     }
-
+    private void Update()
+    {
+        if (Vector3.Distance(transform.position, _vec) > 0.01f)
+        {
+            transform.position = Vector3.Lerp(transform.position, _vec, 2f * Time.deltaTime);
+        }
+    }
     public void SetTransformPoisition(Vector3 vec)
     {
-        transform.position = vec;
+        _vec = vec;
     }
+    
     public void SetTurn(bool red)
     {
         this.red = red;
