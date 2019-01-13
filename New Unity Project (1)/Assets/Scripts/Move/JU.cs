@@ -8,6 +8,7 @@ public class JU : MonoBehaviour, IPiece
     public PiecePos piecePos;
     public bool red;
     Vector3 _vec;
+    Animator anim;
     public PieceType GetPieceType()
     {
         return PieceType.JU;
@@ -18,6 +19,7 @@ public class JU : MonoBehaviour, IPiece
     }
     void Start()
     {
+        anim = GetComponent<Animator>();
         _vec = transform.position;
         gameManager = FindObjectOfType<GameManager>();
     }
@@ -127,8 +129,10 @@ public class JU : MonoBehaviour, IPiece
     }
     private void Update()
     {
+        anim.SetFloat("Run", 0);
         if (Vector3.Distance(transform.position, _vec) > 0.01f)
         {
+            anim.SetFloat("Run", 1);
             transform.position = Vector3.Lerp(transform.position, _vec, 2f * Time.deltaTime);
         }
     }

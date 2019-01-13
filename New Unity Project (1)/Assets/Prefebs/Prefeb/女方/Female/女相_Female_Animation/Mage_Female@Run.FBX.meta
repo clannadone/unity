@@ -149,7 +149,7 @@ ModelImporter:
     400140: Bone22
     400142: Bone23
     400144: Bone24
-    7400000: Take 001
+    7400000: Run
     11100000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
@@ -167,11 +167,8 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
       copied configuration does not match position in animation file:\n\t'Bip01 L
-      Thigh' : position error = 78.557320 mm\n\t'Bip01 L Calf' : position error =
-      49.706226 mm\n\t'Bip01 L Foot' : position error = 46.397335 mm\n\t'Bip01 L Toe0'
-      : position error = 50.550507 mm\n\t'Bip01 R Thigh' : position error = 32.397530
-      mm\n\t'Bip01 R Calf' : position error = 49.706280 mm\n\t'Bip01 R Foot' : position
-      error = 46.397461 mm\n\t'Bip01 R Toe0' : position error = 50.550522 mm\n"
+      Thigh' : position error = 79.603012 mm\n\t'Bip01 R Thigh' : position error =
+      33.556488 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -185,7 +182,35 @@ ModelImporter:
     animationWrapMode: 2
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SystemPanel : BasePanel {
     private CanvasGroup canvasGroup;
@@ -26,5 +27,14 @@ public class SystemPanel : BasePanel {
     public void OnClosePanel()
     {
         UIManager.Instance.PopPanel();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

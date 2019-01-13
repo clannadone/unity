@@ -30,9 +30,11 @@ public class GameManager : MonoBehaviour
     public int width = 9;
     public int length = 10;
 
-    public  Point _SelectedPoint;
-   public  IPiece _SelectedPiece;
+    public Point _SelectedPoint;
+    public IPiece _SelectedPiece;
 
+    [Header("光圈特效")]
+    public GameObject aperture;
 
     IPiece _TargetPiece;
 
@@ -92,8 +94,11 @@ public class GameManager : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         GameObject obj = Click(RedPieceMask);
+
                         if (obj != null)
                             _SelectedPiece = obj.GetComponent<IPiece>();
+                        //添加选择光圈特效
+                        Instantiate(aperture, new Vector3(_SelectedPiece.GetPoisition().x, 0.5f, _SelectedPiece.GetPoisition().z), Quaternion.identity, chessboard.transform);
 
                         if (_SelectedPiece == null)
                         {
@@ -109,6 +114,8 @@ public class GameManager : MonoBehaviour
                         GameObject obj = Click(BlackPieceMask);
                         if (obj != null)
                             _SelectedPiece = obj.GetComponent<IPiece>();
+
+                        Instantiate(aperture, new Vector3(_SelectedPiece.GetPoisition().x, 0.5f, _SelectedPiece.GetPoisition().z), Quaternion.identity, chessboard.transform);
                         if (_SelectedPiece == null)
                         {
                             return;
@@ -135,6 +142,7 @@ public class GameManager : MonoBehaviour
                             _SelectedPiece = null;
                             _SelectedPoint = null;
                             redTurn = !redTurn;
+                            Destroy(aperture);//删除光圈特效
                             state = State.Select;
                         }
                         else
@@ -164,6 +172,7 @@ public class GameManager : MonoBehaviour
                         {
                             _SelectedPiece = null;
                             _SelectedPoint = null;
+                            Destroy(aperture);//删除光圈特效
                             redTurn = !redTurn;
                             state = State.Select;
                         }
@@ -242,38 +251,38 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
-    public bool JiangJun(Point point,bool red)
+    public bool JiangJun(Point point, bool red)
     {
         int _x;
         int _z;
         int index;
         if (red)
         {
-             _x = redJinag.GetPoisition().x;
-             _z = redJinag.GetPoisition().z;
+            _x = redJinag.GetPoisition().x;
+            _z = redJinag.GetPoisition().z;
         }
         else
         {
-             _x = blackJiang.GetPoisition().x;
-             _z = blackJiang.GetPoisition().z;
+            _x = blackJiang.GetPoisition().x;
+            _z = blackJiang.GetPoisition().z;
         }
         List<IPiece> temp = new List<IPiece>();
         //右
         for (int i = 0; i < 8 - _x; i++)
         {
             //车检测
-            if (points[_x + i, _z].piece!=null&& points[_x + i, _z].piece.GetTurn()!=red)
+            if (points[_x + i, _z].piece != null && points[_x + i, _z].piece.GetTurn() != red)
             {
                 temp.Add(points[_x + i, _z].piece);
             }
             //炮检测
-            else if(points[_x + i, _z].piece != null)
+            else if (points[_x + i, _z].piece != null)
             {
-                for (int j = _x+i; j < 8-(_x+i); j++)
+                for (int j = _x + i; j < 8 - (_x + i); j++)
                 {
-                    if(points[_x + i+j, _z].piece != null && points[_x + i+j, _z].piece.GetTurn() != red)
+                    if (points[_x + i + j, _z].piece != null && points[_x + i + j, _z].piece.GetTurn() != red)
                     {
-                        temp.Add(points[_x + i+j, _z].piece);
+                        temp.Add(points[_x + i + j, _z].piece);
                     }
                 }
             }
@@ -282,7 +291,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < _x; i++)
         {
             //车检测
-            if (points[_x - i, _z].piece!= null && points[_x - i, _z].piece.GetTurn() != red)
+            if (points[_x - i, _z].piece != null && points[_x - i, _z].piece.GetTurn() != red)
             {
                 temp.Add(points[_x - i, _z].piece);
             }
@@ -291,34 +300,34 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 9 - _z; i++)
         {
             //车检测
-            if (points[_x, _z+i].piece != null && points[_x , _z+i].piece.GetTurn() != red)
+            if (points[_x, _z + i].piece != null && points[_x, _z + i].piece.GetTurn() != red)
             {
-                temp.Add(points[_x , _z+i].piece);
+                temp.Add(points[_x, _z + i].piece);
             }
         }
         for (int i = 0; i < _z; i++)
         {
             //车检测
-            if (points[_x , _z-i].piece != null && points[_x , _z-i].piece.GetTurn() != red)
+            if (points[_x, _z - i].piece != null && points[_x, _z - i].piece.GetTurn() != red)
             {
                 temp.Add(points[_x, _z - i].piece);
             }
         }
         //马检测
-        if (points[_x+1,_z+2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
-        if (points[_x+2,_z+1].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
-        if (points[_x+1,_z-2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
-        if (points[_x+1,_z-1].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
-        if (points[_x-1,_z+2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
-        if (points[_x-1,_z+1].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
-        if (points[_x-1,_z-2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
-        if (points[_x-1,_z-2].piece!=null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x + 1, _z + 2].piece != null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x + 2, _z + 1].piece != null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x + 1, _z - 2].piece != null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x + 1, _z - 1].piece != null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x - 1, _z + 2].piece != null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x - 1, _z + 1].piece != null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x - 1, _z - 2].piece != null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
+        if (points[_x - 1, _z - 2].piece != null && points[_x + 1, _z + 2].piece.GetTurn() != red) temp.Add(points[_x + 1, _z + 2].piece);
 
-        
+
 
         foreach (var item in temp)
         {
-            if(item.Move(points[_x, _z]))
+            if (item.Move(points[_x, _z]))
             {
                 return true;
             }
